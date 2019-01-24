@@ -54,21 +54,60 @@ class SOM():
         # d is distance from BMU
         s = self._neighbourhood(t)
         return np.exp(-d**2/(2*s**2))
+    
+    #add
+    def _calc_outputlayer(self,inputdata):
+        return np.dot(self.nodes,inputdata)
 
+if __name__ == '__main__':
+    N = 20        
+    teachers = np.random.rand(10000, 3)
+    som = SOM(teachers, N=N, seed=10)
+    
+    # Initial map
+    plt.imshow(som.nodes.reshape((N, N, 3)),
+               interpolation='none')
+    plt.show()
+    
+    # Train
+    som.train()
+    
+    
+    # Trained MAP
+    plt.imshow(som.nodes.reshape((N, N, 3)),
+               interpolation='none')
+    plt.show()      
+    
+    tester=np.array([0.5,0.9,0.1])
+    plt.imshow([tester],
+               interpolation='none')
+    plt.show()
+    print("best match index is"+str(som._best_matching_unit(tester)))
+    
+###################
+    N = 20        
+    teachers = np.array([ #b,g,r
+            [1,0,0],#blue
+            [0,1,0],#green
+            [0,0,1],#red
+            [1,1,1],#black
+            [0.00001,0.00001,0.00001]#while
+            ])
+    som = SOM(teachers, N=N, seed=10)
+    
+    # Initial map
+    plt.imshow(som.nodes.reshape((N, N, 3)),
+               interpolation='none')
+    plt.show()
+    
+    # Train
+    for i in range(1):
+        som.train()
+    
+    
+    # Trained MAP
+    plt.imshow(som.nodes.reshape((N, N, 3)),
+               interpolation='none')
+    plt.show()      
+##########
 
-N = 20        
-teachers = np.random.rand(10000, 3)
-som = SOM(teachers, N=N, seed=10)
-
-# Initial map
-plt.imshow(som.nodes.reshape((N, N, 3)),
-           interpolation='none')
-plt.show()
-
-# Train
-som.train()
-
-# Trained MAP
-plt.imshow(som.nodes.reshape((N, N, 3)),
-           interpolation='none')
-plt.show()      
