@@ -24,6 +24,8 @@ class SOM():
                             x.flatten()[:, np.newaxis]))
         self.nodes = np.random.rand(self.N*self.N,
                                     self.teachers.shape[1])
+        #add
+        self.nodes = self.nodes*self.teachers.mean()/self.nodes.mean()
 
     def train(self):
         for i, teacher in enumerate(self.teachers):
@@ -101,7 +103,7 @@ if __name__ == '__main__':
     plt.show()
     
     # Train
-    for i in range(1):
+    for i in range(105):
         som.train()
     
     
